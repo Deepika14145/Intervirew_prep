@@ -1,0 +1,331 @@
+/* ─────────────────────────────────────────────
+   Interview Setup Page  (Screen 1)
+   ───────────────────────────────────────────── */
+
+.page {
+    max-width: var(--content-max-w);
+    margin: 0 auto;
+    padding-bottom: var(--sp-12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-8);
+    animation: fadeInUp var(--duration-slow) var(--ease-out) both;
+}
+
+/* ── Heading ── */
+.heading {
+    text-align: center;
+    padding-top: var(--sp-4);
+    max-width: 540px;
+}
+
+.title {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-tight);
+    margin-bottom: var(--sp-3);
+}
+
+.subtitle {
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    line-height: var(--leading-relaxed);
+}
+
+/* ── Setup Card ── */
+.card {
+    width: 100%;
+    background: var(--color-surface);
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+    padding: var(--sp-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-7);
+}
+
+/* ── Field Section ── */
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+}
+
+.fieldLabel {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-1-5);
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    letter-spacing: var(--tracking-widest);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    user-select: none;
+}
+
+.fieldIcon {
+    display: flex;
+    align-items: center;
+    color: var(--color-primary);
+}
+
+/* ── Select ── */
+.selectWrapper {
+    position: relative;
+}
+
+.select {
+    width: 100%;
+    appearance: none;
+    padding: 13px var(--sp-5);
+    padding-right: 44px;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    font-size: var(--text-base);
+    font-family: var(--font-sans);
+    font-weight: var(--font-medium);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.select:hover {
+    border-color: var(--color-border-strong);
+}
+
+.select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-focus);
+}
+
+.selectArrow {
+    position: absolute;
+    right: var(--sp-4);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    pointer-events: none;
+    display: flex;
+}
+
+/* ── Toggle Group (Experience Level) ── */
+.toggleGroup {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-2);
+}
+
+.toggleBtn {
+    padding: 11px var(--sp-3);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-secondary);
+    background: var(--color-surface);
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        box-shadow var(--transition-fast);
+    cursor: pointer;
+}
+
+.toggleBtn:hover {
+    border-color: var(--color-primary-muted);
+    color: var(--color-primary);
+    background: var(--color-primary-subtle);
+}
+
+.toggleBtnActive {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    font-weight: var(--font-semibold);
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+}
+
+.toggleBtnActive:hover {
+    background: var(--color-primary-hover);
+    border-color: var(--color-primary-hover);
+    color: var(--color-text-inverse);
+}
+
+/* ── Two-column row ── */
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-8);
+}
+
+/* ── Format Buttons ── */
+.formatGroup {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-2);
+}
+
+.formatBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    padding: 11px var(--sp-4);
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-secondary);
+    background: var(--color-surface);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.formatBtn:hover {
+    border-color: var(--color-primary-muted);
+    color: var(--color-primary);
+    background: var(--color-primary-subtle);
+}
+
+.formatBtnActive {
+    border-color: var(--color-primary);
+    background: var(--color-primary-subtle);
+    color: var(--color-primary);
+    font-weight: var(--font-semibold);
+}
+
+/* ── Time Badge ── */
+.timeBadge {
+    margin-left: auto;
+    background: var(--color-primary-subtle);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary-border);
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    padding: 2px 10px;
+    border-radius: var(--radius-full);
+    letter-spacing: 0;
+    text-transform: none;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── Slider ── */
+.sliderWrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+}
+
+.sliderMin,
+.sliderMax {
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-disabled);
+    min-width: 22px;
+}
+
+.slider {
+    flex: 1;
+    accent-color: var(--color-primary);
+    height: 6px;
+    cursor: pointer;
+    border-radius: var(--radius-full);
+}
+
+/* ── CTA Divider ── */
+.ctaDivider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: 0;
+}
+
+/* ── Start Button ── */
+.startBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-3);
+    padding: 17px var(--sp-8);
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    border-radius: var(--radius-xl);
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    letter-spacing: var(--tracking-tight);
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.30);
+    transition:
+        background var(--transition-fast),
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.startBtn:hover {
+    background: var(--color-primary-hover);
+    box-shadow: 0 6px 24px rgba(79, 70, 229, 0.40);
+    transform: translateY(-1px);
+}
+
+.startBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+}
+
+/* ── CTA metadata ── */
+.meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    color: var(--color-text-disabled);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+}
+
+.metaItem {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-1-5);
+}
+
+.metaDot {
+    font-size: var(--text-base);
+    line-height: 1;
+}
+
+/* ── Trust badges ── */
+.trustBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-8);
+    flex-wrap: wrap;
+}
+
+.trustItem {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    color: var(--color-text-muted);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

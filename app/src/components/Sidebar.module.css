@@ -1,0 +1,204 @@
+/* ─────────────────────────────────────────────
+   Sidebar Component
+   ───────────────────────────────────────────── */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    z-index: var(--z-sticky);
+}
+
+/* ── Logo ── */
+.logoArea {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-5) var(--sp-5) var(--sp-5);
+    border-bottom: 1px solid var(--color-border);
+    flex-shrink: 0;
+}
+
+.logoMark {
+    width: 34px;
+    height: 34px;
+    background: var(--color-primary);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
+    transition: box-shadow var(--transition-fast);
+}
+
+.logoMark:hover {
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.45);
+}
+
+.logoText {
+    font-size: var(--text-xl);
+    font-weight: var(--font-extrabold);
+    color: var(--color-text-primary);
+    letter-spacing: var(--tracking-tight);
+    line-height: 1;
+}
+
+.logoText span {
+    color: var(--color-primary);
+}
+
+/* ── Nav section ── */
+.navSection {
+    flex: 1;
+    padding: var(--sp-4) var(--sp-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+    overflow-y: auto;
+}
+
+.navGroupLabel {
+    font-size: var(--text-2xs);
+    font-weight: var(--font-bold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--color-text-disabled);
+    padding: var(--sp-3) var(--sp-3) var(--sp-1);
+    margin-top: var(--sp-2);
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-2-5) var(--sp-3);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-muted);
+    transition:
+        background var(--transition-fast),
+        color var(--transition-fast);
+    position: relative;
+}
+
+.navLink:hover {
+    background: var(--color-surface-2);
+    color: var(--color-text-primary);
+}
+
+.navLinkActive {
+    background: var(--color-primary-subtle);
+    color: var(--color-primary);
+    font-weight: var(--font-semibold);
+}
+
+.navLinkActive::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 25%;
+    bottom: 25%;
+    width: 3px;
+    background: var(--color-primary);
+    border-radius: 0 var(--radius-full) var(--radius-full) 0;
+}
+
+.navIcon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    opacity: 0.75;
+    transition: opacity var(--transition-fast);
+}
+
+.navLinkActive .navIcon,
+.navLink:hover .navIcon {
+    opacity: 1;
+}
+
+/* ── Footer links (Profile, Settings, Logout) ── */
+.sidebarFooter {
+    border-top: 1px solid var(--color-border);
+    padding: var(--sp-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+}
+
+.footerLink {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-2-5) var(--sp-3);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-muted);
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.footerLink:hover {
+    background: var(--color-surface-2);
+    color: var(--color-text-primary);
+}
+
+.footerLinkDanger:hover {
+    background: var(--color-danger-subtle);
+    color: var(--color-danger);
+}
+
+/* ── Pro Banner ── */
+.proBanner {
+    margin: var(--sp-3);
+    background: linear-gradient(135deg, #312E81 0%, #4338CA 50%, #4F46E5 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-4);
+    color: white;
+    flex-shrink: 0;
+}
+
+.proLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-1-5);
+    font-size: var(--text-2xs);
+    font-weight: var(--font-bold);
+    letter-spacing: var(--tracking-widest);
+    opacity: 0.7;
+    margin-bottom: var(--sp-2);
+    text-transform: uppercase;
+}
+
+.proDesc {
+    font-size: var(--text-xs);
+    line-height: var(--leading-relaxed);
+    opacity: 0.75;
+    margin-bottom: var(--sp-3);
+}
+
+.upgradeBtn {
+    display: block;
+    width: 100%;
+    padding: var(--sp-2) 0;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: white;
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    text-align: center;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.upgradeBtn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+}
