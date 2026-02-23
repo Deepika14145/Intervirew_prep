@@ -2,7 +2,9 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-route
 import MainLayout from './components/MainLayout';
 import InterviewSetup from './pages/InterviewSetup';
 import InterviewSession from './pages/InterviewSession';
-import { Dashboard, Performance, Resumes, Career } from './pages/stubs';
+import ChatbotWidget from './components/ChatbotWidget';
+import Dashboard from './pages/Dashboard';
+import { Performance, Resumes, Career } from './pages/stubs';
 
 /* Breadcrumb labels per route — add an entry when adding a new route */
 const BREADCRUMBS = {
@@ -56,6 +58,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <AppRoutes />
+      <ChatbotWidget />
     </BrowserRouter>
   );
 }

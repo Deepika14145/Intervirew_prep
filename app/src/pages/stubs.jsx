@@ -10,30 +10,6 @@
 
 import StubPage from './StubPage';
 
-// ── Dashboard ────────────────────────────────────────────────
-export function Dashboard() {
-    return (
-        <StubPage
-            title="Dashboard"
-            description="Overview of your interview readiness, recent sessions, and performance trends."
-            icon={
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" />
-                    <rect x="14" y="14" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" />
-                </svg>
-            }
-            scope={[
-                'Welcome banner with interview readiness score (donut chart via Recharts)',
-                'Four KPI stat cards: Technical Score, Communication, Confidence, Interviews Completed',
-                'Interview History table with role, level, date, score, "View Feedback" action',
-                '"Progress Over Time" chart — ComposedChart (Bar + Line) from Recharts',
-                'Topic Analysis section — horizontal progress bars per skill',
-                'AI Assistant button in Topbar linking to the chatbot popup',
-            ]}
-        />
-    );
-}
-
 // ── Performance ──────────────────────────────────────────────
 export function Performance() {
     return (
