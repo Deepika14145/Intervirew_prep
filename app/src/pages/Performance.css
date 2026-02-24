@@ -1,3 +1,6 @@
+* {
+  transition: all 0.3s ease;
+}
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -51,6 +54,18 @@ body {
 
 .container {
   padding: 30px;
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .header {
@@ -65,6 +80,13 @@ body {
   border: none;
   padding: 10px 16px;
   border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(47, 92, 255, 0.3);
 }
 
 .btn-outline {
@@ -73,6 +95,12 @@ body {
   padding: 10px 16px;
   border-radius: 8px;
   margin-right: 10px;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  background: #f5f7ff;
+  border-color: #2f5cff;
 }
 
 .grid {
@@ -95,6 +123,12 @@ body {
   padding: 18px;
   border-radius: 12px;
   margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
 /* Stats */
@@ -129,6 +163,12 @@ body {
   align-items: center;
   margin: auto;
   font-weight: bold;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.circle:hover {
+  transform: scale(1.1) rotate(3deg);
+  box-shadow: 0 10px 20px rgba(47, 92, 255, 0.25);
 }
 
 /* Bars */
@@ -145,6 +185,11 @@ body {
   height: 40px;
   background: #ddd;
   border-radius: 4px;
+  transition: transform 0.2s ease;
+}
+
+.bar:hover {
+  transform: scaleY(1.2);
 }
 
 .bar.orange {
@@ -189,14 +234,25 @@ body {
   padding: 12px;
   border-radius: 30px;
   text-align: center;
+  transition: box-shadow 0.3s ease;
 }
 
+.player:hover {
+  box-shadow: 0 0 20px rgba(47, 92, 255, 0.6);
+}
 /* Tips */
 
 .tip {
   display: flex;
   gap: 10px;
   margin: 10px 0;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.tip:hover {
+  background: #f5f7ff;
+  transform: translateX(5px);
 }
 
 .tip-icon {
@@ -238,4 +294,21 @@ body {
 .percent {
   float: right;
   font-size: 12px;
+}
+
+.progress-fill {
+  background: #2f5cff;
+  height: 8px;
+  width: 0%;
+  border-radius: 10px;
+  animation: fillBar 1.5s ease forwards;
+}
+
+@keyframes fillBar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 74%;
+  }
 }

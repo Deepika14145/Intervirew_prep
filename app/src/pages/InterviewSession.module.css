@@ -622,3 +622,23 @@
         box-shadow: 0 0 0 12px rgba(59, 48, 204, 0);
     }
 }
+
+
+.analysisBtn {
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.analysisBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+}

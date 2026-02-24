@@ -1,0 +1,234 @@
+.analysis-page {
+  padding: 30px;
+  background: #f5f7fb;
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.header {
+  margin-bottom: 25px;
+}
+
+.grid {
+  display: flex;
+  gap: 20px;
+}
+
+.left {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Cards */
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+
+.center {
+  text-align: center;
+}
+
+.label {
+  font-size: 12px;
+  color: #2f5cff;
+  font-weight: bold;
+}
+
+/* Score */
+
+.score-ring {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  margin: 15px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-inner {
+  width: 130px;
+  height: 130px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.score-number {
+  font-size: 42px;
+  font-weight: bold;
+}
+
+/* Progress */
+
+.progress {
+  margin-top: 15px;
+}
+
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #e6e9f2;
+  border-radius: 10px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg,#2f5cff,#00c6a7);
+}
+
+/* Tags */
+
+.tags span {
+  background: #ffe9e9;
+  color: #ff4d4f;
+  padding: 6px 10px;
+  border-radius: 8px;
+  margin: 5px;
+  display: inline-block;
+  font-size: 12px;
+}
+
+/* AI Section */
+
+.ai-section {
+  margin-top: 30px;
+  background: linear-gradient(135deg,#0b1b45,#08112d);
+  color: white;
+  padding: 25px;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.08),
+    transparent
+  );
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+
+.ai-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ai-text {
+  margin-top: 15px;
+  line-height: 1.6;
+}
+
+.improvements {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.improvements div {
+  background: rgba(255,255,255,0.08);
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+/* Button */
+
+.btn-primary {
+  background: #2f5cff;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(47,92,255,0.4);
+}
+
+.question-card {
+  border-left: 4px solid #2f5cff;
+}
+
+.answer-card {
+  background: linear-gradient(135deg,#f8faff,#ffffff);
+}
+
+.answer-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #2f5cff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.answer-text {
+  margin-top: 12px;
+  line-height: 1.6;
+  color: #444;
+}
+
+/* AI Summary */
+
+.ai-summary {
+  background: #f5f8ff;
+  border: 1px solid #dbe5ff;
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.summary-icon {
+  font-size: 18px;
+}

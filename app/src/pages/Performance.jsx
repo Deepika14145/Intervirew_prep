@@ -1,6 +1,6 @@
-import "./InterviewAnalysis.css";
-
-export default function AnalysisPage() {
+import "./Performance.css";
+import { Link } from "react-router-dom";
+export default function Performance() {
   return (
     <div className="page">
 
@@ -16,7 +16,10 @@ export default function AnalysisPage() {
 
           <div className="header-buttons">
             <button className="btn-outline">Share Report</button>
-            <button className="btn-primary">New Mock Interview</button>
+
+            <Link to="/mock-interviews" className="btn-primary">
+              New Mock Interview
+            </Link>
           </div>
         </div>
 

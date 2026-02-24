@@ -407,6 +407,13 @@ export default function InterviewSession() {
                         </svg>
                     )}
                 </button>
+                 {/* NEW BUTTON */}
+                <button
+                  className={styles.analysisBtn}
+                  onClick={() => navigate("/analysis")}
+                >
+                Analysis Performance
+                </button>
             </footer>
         </div>
     );
