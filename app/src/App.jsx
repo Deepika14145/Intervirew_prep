@@ -4,7 +4,9 @@ import InterviewSetup from './pages/InterviewSetup';
 import InterviewSession from './pages/InterviewSession';
 import ChatbotWidget from './components/ChatbotWidget';
 import Dashboard from './pages/Dashboard';
+import InterviewAnalysis from './pages/InterviewAnalysis';
 import { Performance, Resumes, Career } from './pages/stubs';
+import ResumeUpload from './pages/ResumeUpload';
 
 /* Breadcrumb labels per route — add an entry when adding a new route */
 const BREADCRUMBS = {
@@ -15,6 +17,7 @@ const BREADCRUMBS = {
   '/career': ['Career Advice'],
   '/profile': ['Profile'],
   '/settings': ['Settings'],
+  '/interview-analysis': ['Interview Analysis'],
 };
 
 function AppRoutes() {
@@ -40,10 +43,11 @@ function AppRoutes() {
         {/* 🚧 Stubs — replace export in stubs.jsx when building */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/performance" element={<Performance />} />
-        <Route path="/resumes" element={<Resumes />} />
+        <Route path="/resumes" element={<ResumeUpload />} />
         <Route path="/career" element={<Career />} />
         <Route path="/profile" element={<Dashboard />} />
         <Route path="/settings" element={<Dashboard />} />
+        <Route path="/interview-analysis" element={<InterviewAnalysis />} />
       </Route>
 
       {/* Full-screen session — no sidebar */}

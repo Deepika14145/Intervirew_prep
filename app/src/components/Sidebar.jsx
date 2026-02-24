@@ -53,6 +53,15 @@ const NAV_ITEMS = [
       </svg>
     ),
   },
+  {
+    to: '/interview-analysis',
+    label: 'Interview Analysis',
+    icon: (
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" /><polygon points="10 8 16 12 10 16" />
+      </svg>
+    ),
+  },
 ];
 
 const FOOTER_LINKS = [
