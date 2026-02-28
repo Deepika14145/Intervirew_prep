@@ -1,0 +1,305 @@
+.profileContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-8);
+    max-width: var(--content-max-w);
+    margin: 0 auto;
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: var(--sp-6);
+    align-items: flex-start;
+}
+
+/* ─────────────────────────────────────────────────────────
+ * Sidebar Navigation
+ * ───────────────────────────────────────────────────────── */
+.sidebar {
+    padding: var(--sp-4);
+    position: sticky;
+    top: calc(var(--topbar-height) + var(--sp-6));
+}
+
+.navMenu {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    padding: var(--sp-3) var(--sp-4);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    text-align: left;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.navItem:hover {
+    background: var(--color-surface-2);
+    color: var(--color-text-primary);
+}
+
+.navItem.active {
+    background: var(--color-primary-subtle);
+    color: var(--color-primary);
+    font-weight: var(--font-bold);
+}
+
+.navIcon {
+    font-size: var(--text-base);
+}
+
+/* ─────────────────────────────────────────────────────────
+ * Main Form Area
+ * ───────────────────────────────────────────────────────── */
+.mainContent {
+    padding: var(--sp-8);
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.formSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-5);
+    animation: fadeIn var(--duration-normal) var(--ease-default);
+}
+
+.sectionTitle {
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--sp-2);
+    padding-bottom: var(--sp-4);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.subsectionTitle {
+    font-size: var(--text-base);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    margin-top: var(--sp-4);
+    margin-bottom: var(--sp-1);
+}
+
+/* General Layouts */
+.grid2Col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-6);
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+}
+
+/* Avatar Upload Style */
+.avatarSection {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-6);
+    margin-bottom: var(--sp-4);
+}
+
+.avatarCircle {
+    width: 80px;
+    height: 80px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    box-shadow: var(--shadow-sm);
+}
+
+.avatarActions {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Inputs */
+.input,
+.select,
+.textarea {
+    padding: var(--sp-3) var(--sp-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    transition: all var(--transition-fast);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-subtle);
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Toggles & Checkboxes */
+.toggleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sp-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.toggleRow:hover {
+    background: var(--color-surface-2);
+}
+
+.toggleInfo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+}
+
+.toggleLabel {
+    font-weight: var(--font-semibold);
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+}
+
+.toggleSubtext {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--color-primary);
+    cursor: pointer;
+}
+
+/* Footer Actions */
+.formActions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--sp-4);
+    margin-top: var(--sp-8);
+    padding-top: var(--sp-6);
+    border-top: 1px solid var(--color-border);
+}
+
+.successMessage {
+    color: var(--color-success);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    animation: fadeIn var(--duration-fast);
+}
+
+/* Buttons */
+.primaryBtn {
+    background: var(--color-primary);
+    color: white;
+    padding: var(--sp-3) var(--sp-6);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-semibold);
+    font-size: var(--text-sm);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-normal);
+}
+
+.primaryBtn:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.primaryBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.secondaryBtn {
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    padding: var(--sp-2) var(--sp-4);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-semibold);
+    font-size: var(--text-sm);
+    border: 1px solid var(--color-border-strong);
+    cursor: pointer;
+    transition: var(--transition-normal);
+}
+
+.secondaryBtn:hover {
+    background: var(--color-surface-2);
+    border-color: var(--color-primary);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+        margin-bottom: var(--sp-4);
+    }
+
+    .navMenu {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: var(--sp-2);
+    }
+
+    .navItem {
+        white-space: nowrap;
+    }
+
+    .grid2Col {
+        grid-template-columns: 1fr;
+    }
+}
