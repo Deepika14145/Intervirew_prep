@@ -12,6 +12,12 @@ import ResumePreview from './pages/ResumePreview';
 import AnalysisPage from "./pages/AnalysisPage";
 import Notifications from './pages/Notifications';
 
+// Auth imports
+import { AuthProvider, useAuth } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+
 /* Breadcrumb labels per route — add an entry when adding a new route */
 const BREADCRUMBS = {
   '/dashboard': ['Dashboard'],
@@ -27,17 +33,27 @@ const BREADCRUMBS = {
 
 function AppRoutes() {
   const { pathname } = useLocation();
+  const { currentUser } = useAuth();
   const breadcrumbs = BREADCRUMBS[pathname] ?? ['Dashboard'];
+
+  // Parse a friendly name from the active Firebase session
+  const displayName = currentUser?.displayName || (currentUser?.email ? currentUser.email.split('@')[0] : 'User');
 
   return (
     <Routes>
-      {/* Pages WITH sidebar + topbar */}
+      {/* Public Routes */}
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignupPage />} />
+
+      {/* Pages WITH sidebar + topbar (PROTECTED) */}
       <Route
         element={
-          <MainLayout
-            breadcrumbs={breadcrumbs}
-            user={{ name: 'Alex Rivera', role: 'Frontend Dev' }}
-          />
+          <ProtectedRoute>
+            <MainLayout
+              breadcrumbs={breadcrumbs}
+              user={{ name: displayName, role: 'Candidate' }} // Dynamically updated!
+            />
+          </ProtectedRoute>
         }
       >
         <Route index element={<Navigate to="/dashboard" replace />} />
@@ -58,8 +74,15 @@ function AppRoutes() {
         {/* <Route path="/interview-analysis" element={<InterviewAnalysis />} /> */}
       </Route>
 
-      {/* Full-screen session — no sidebar */}
-      <Route path="/interview/session" element={<InterviewSession />} />
+      {/* Full-screen session — no sidebar (PROTECTED) */}
+      <Route 
+        path="/interview/session" 
+        element={
+          <ProtectedRoute>
+            <InterviewSession />
+          </ProtectedRoute>
+        } 
+      />
 
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
@@ -68,9 +91,11 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AppRoutes />
-      <ChatbotWidget />
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <AppRoutes />
+        <ChatbotWidget />
+      </BrowserRouter>
+    </AuthProvider>
   );
 }

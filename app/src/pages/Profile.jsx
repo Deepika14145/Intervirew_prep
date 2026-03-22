@@ -4,46 +4,33 @@ import styles from './Profile.module.css';
 // ─────────────────────────────────────────────────────────
 // Mock Initial Data & Endpoints
 // ─────────────────────────────────────────────────────────
-const MOCK_PROFILE_DATA = {
-    id: 'usr_123',
-    firstName: 'Alex',
-    lastName: 'Rivera',
-    email: 'alex.rivera@intervai.com',
-    phone: '+1 (555) 123-4567',
-    role: 'Frontend Developer',
-    level: 'Mid-Level',
-    skills: ['React', 'TypeScript', 'CSS Modules', 'System Design'],
-    preferences: {
-        emailNotifications: true,
-        smsNotifications: false,
-        theme: 'System',
-    }
+/**
+ * Hit the backend to load DynamoDB Profile Data
+ */
+const fetchProfile = async () => {
+    const token = localStorage.getItem("authToken");
+    const res = await fetch("http://localhost:5000/api/auth/me", {
+        headers: { "Authorization": `Bearer ${token}` }
+    });
+    if (!res.ok) throw new Error("Failed to fetch profile");
+    return res.json();
 };
 
 /**
- * Backend Contract Specifications
- * --------------------------------
- * GET /api/users/profile
- * Returns: { user: ProfileObject }
+ * Persist updates back to DynamoDB
  */
-const mockFetchProfile = async () => {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve({ user: MOCK_PROFILE_DATA }), 1000);
+const updateProfile = async (updates) => {
+    const token = localStorage.getItem("authToken");
+    const res = await fetch("http://localhost:5000/api/auth/me", {
+        method: "PUT",
+        headers: { 
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updates)
     });
-};
-
-/**
- * Backend Contract Specifications
- * --------------------------------
- * PUT /api/users/profile
- * Payload: Partial<ProfileObject>
- * Returns: { success: boolean, user: ProfileObject }
- */
-const mockUpdateProfile = async (updates) => {
-    console.log("--> PUT /api/users/profile", updates);
-    return new Promise((resolve) => {
-        setTimeout(() => resolve({ success: true, user: { ...MOCK_PROFILE_DATA, ...updates } }), 800);
-    });
+    if (!res.ok) throw new Error("Failed to save profile");
+    return res.json();
 };
 
 export default function Profile() {
@@ -53,12 +40,28 @@ export default function Profile() {
     const [formData, setFormData] = useState(null);
     const [saveSuccess, setSaveSuccess] = useState(false);
 
+    const [errorMsg, setErrorMsg] = useState(null);
+
     useEffect(() => {
-        mockFetchProfile().then(data => {
+        fetchProfile().then(data => {
             setFormData(data.user);
+            setIsLoading(false);
+        }).catch(err => {
+            console.error(err);
+            setErrorMsg(err.message);
             setIsLoading(false);
         });
     }, []);
+
+    if (errorMsg) {
+        return (
+            <div className={`${styles.profileContainer} u-page-enter`} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column' }}>
+                <h2 style={{ color: 'var(--color-danger)' }}>Backend Connection Failed</h2>
+                <p>Error: {errorMsg}</p>
+                <p style={{ marginTop: '20px', color: 'var(--color-text-muted)' }}>Did you restart your backend terminal (`node server.js`) after my last update?</p>
+            </div>
+        );
+    }
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -94,14 +97,16 @@ export default function Profile() {
         setIsSaving(true);
         setSaveSuccess(false);
 
-        // Push the full form data to our mock backend endpoint
-        const response = await mockUpdateProfile(formData);
+        // Push the full form data to our backend endpoint
+        try {
+            const response = await updateProfile(formData);
 
         if (response.success) {
             setFormData(response.user);
             setSaveSuccess(true);
             setTimeout(() => setSaveSuccess(false), 3000); // Hide success message after 3s
         }
+        } catch (e) { console.error(e); }
 
         setIsSaving(false);
     };
