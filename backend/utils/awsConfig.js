@@ -3,7 +3,7 @@ const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
 const { DynamoDBDocumentClient } = require('@aws-sdk/lib-dynamodb');
 const { PollyClient } = require('@aws-sdk/client-polly');
 
-const region = process.env.AWS_REGION || "ap-south-1";
+const region = process.env.AWS_REGION || "us-east-1";
 
 // AWS Credentials will be picked automatically if running on EC2/Lambda 
 // or loaded from .env for local testing. (User's instruction: no technical privacy issues embedded)
