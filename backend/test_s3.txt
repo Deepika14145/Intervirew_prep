@@ -1,0 +1,2 @@
+[dotenv@17.3.1] injecting env (9) from .env -- tip: ≡ƒñû agentic secret storage: https://dotenvx.com/as2
+AWS_ERROR: PermanentRedirect The bucket you are attempting to access must be addressed using the specified endpoint. Please send all future requests to this endpoint.
