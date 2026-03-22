@@ -9,41 +9,62 @@ export default function ResumeUpload() {
   const [progress, setProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [dragging, setDragging] = useState(false);
+  const [s3Key, setS3Key] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const handleFile = (selectedFile) => {
     if (!selectedFile) return;
 
     setFile(selectedFile);
-    simulateUpload();
+    performUpload(selectedFile);
   };
 
   const handleFileChange = (e) => {
     handleFile(e.target.files[0]);
   };
 
-  const simulateUpload = () => {
+  const performUpload = async (uploadFile) => {
     setUploading(true);
-    setProgress(0);
+    setProgress(20);
+    setErrorMsg(null);
 
-    let percent = 0;
+    try {
+      // Create conventional payload via standard Browser Web Standard FormData handling
+      const formData = new FormData();
+      formData.append("resume", uploadFile);
 
-    const interval = setInterval(() => {
-      percent += Math.random() * 15;
+      // Issue HTTP POST directly to our NodeJS backend avoiding any S3 cross-origin issues
+      const res = await fetch("http://localhost:5000/api/s3/upload-resume", {
+        method: "POST",
+        body: formData, // the browser inherently attaches multipar/form-data rules
+      });
+      
+      const data = await res.json();
+      setProgress(60);
 
-      if (percent >= 100) {
-        percent = 100;
-        clearInterval(interval);
-        setUploading(false);
+      if (!res.ok) {
+         throw new Error(`Express Backend Error (${res.status}): ${data.error || JSON.stringify(data)}`);
       }
 
-      setProgress(Math.floor(percent));
-    }, 300);
+      setProgress(100);
+      setS3Key(data.objectKey);
+      console.log("UI Upload securely routed locally and stored in S3 Key via proxy:", data.objectKey);
+
+    } catch(err) {
+      console.error("Upload error:", err);
+      setProgress(0);
+      setErrorMsg(err.message || "Failed to route traffic to local Backend port effectively.");
+      alert(`🚨 Local Proxy Upload Failed:\n\n${err.message || err}`);
+    } finally {
+      setUploading(false);
+    }
   };
 
   const removeFile = () => {
     setFile(null);
     setProgress(0);
     setUploading(false);
+    setErrorMsg(null);
   };
 
   const openFileBrowser = () => {
@@ -127,14 +148,20 @@ export default function ResumeUpload() {
               <span className="remove" onClick={removeFile}>✕</span>
 
               <div className="progress-section">
-                <span>{progress}% Complete</span>
-                <span>{uploading ? "Uploading..." : "Done"}</span>
+                <span>{errorMsg ? "❌ Upload Failed" : progress + "% Complete"}</span>
+                <span>{errorMsg ? "Error" : (uploading ? "Uploading..." : "Done")}</span>
               </div>
+
+              {errorMsg && (
+                <div style={{color: 'red', marginTop: '10px', fontSize: '0.85rem'}}>
+                  {errorMsg}
+                </div>
+              )}
 
               <div className="progress-bar">
                 <div
                   className="progress-fill"
-                  style={{ width: `${progress}%` }}
+                  style={{ width: `${progress}%`, backgroundColor: errorMsg ? 'red' : '' }}
                 ></div>
               </div>
             </div>
@@ -148,8 +175,8 @@ export default function ResumeUpload() {
               <button className="back">Back</button>
               <button
                 className="continue"
-                disabled={!file || uploading}
-                onClick={() => navigate("/resume-preview", { state: { file } })}
+                disabled={!file || uploading} 
+                onClick={() => navigate("/resume-preview", { state: { s3Key } })}
               >
                 Continue
               </button>

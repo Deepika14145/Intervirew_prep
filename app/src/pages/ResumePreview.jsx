@@ -1,57 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Document, Page, pdfjs } from "react-pdf";
 import "./ResumePreview.css";
-
-pdfjs.GlobalWorkerOptions.workerSrc =
-  `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 export default function ResumePreview() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const file = location.state?.file;
+  const s3Key = location.state?.s3Key;
+  const [pdfUrl, setPdfUrl] = useState(null);
 
-  const [numPages, setNumPages] = useState(null);
+  useEffect(() => {
+    if (!s3Key) return;
+    
+    // Dynamically fetch the direct S3 file read-URL from backend
+    fetch("http://localhost:5000/api/s3/generate-read-url", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ objectKey: s3Key })
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.readUrl) {
+        setPdfUrl(data.readUrl);
+      }
+    })
+    .catch((err) => console.error("Could not fetch S3 URL:", err));
+  }, [s3Key]);
 
-  if (!file) {
-    return <div>No file found</div>;
+  if (!s3Key) {
+    return <div>No resume uploaded to AWS S3. Return to upload page.</div>;
   }
-
-  const fileURL = URL.createObjectURL(file);
 
   return (
     <div className="preview-page">
 
       <div className="preview-header">
-        <h2>Resume Preview</h2>
+        <h2>AWS S3 Resume Render</h2>
 
         <div className="actions">
           <button className="back" onClick={() => navigate(-1)}>
             Back
           </button>
 
-          <button className="continue">
+          <button className="continue" onClick={() => navigate('/mock-interviews')}>
             Confirm & Continue
           </button>
         </div>
       </div>
 
-      <div className="pdf-container">
-
-        <Document
-          file={fileURL}
-          onLoadSuccess={({ numPages }) => setNumPages(numPages)}
-        >
-          {Array.from(new Array(numPages), (el, index) => (
-            <Page
-              key={index}
-              pageNumber={index + 1}
-              width={800}
+      <div className="pdf-container" style={{height: "80vh", width: "100%"}}>
+        {pdfUrl ? (
+            <iframe 
+                src={pdfUrl} 
+                title="S3 Resume Preview" 
+                width="100%" 
+                height="100%" 
+                style={{border: "none"}}
             />
-          ))}
-        </Document>
-
+        ) : (
+            <p>Fetching encrypted resume token from S3 backend...</p>
+        )}
       </div>
     </div>
   );

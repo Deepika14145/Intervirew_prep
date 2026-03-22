@@ -128,12 +128,35 @@ export default function InterviewSession() {
 
     const currentQ = QUESTIONS[questionIdx];
 
-    /* ── Countdown timer ── */
+    /* ── Countdown timer and Polly TTS ── */
     useEffect(() => {
         setTimeLeft(TOTAL_TIME);
         setIsInterviewerSpeaking(true);
-        const speakTimeout = setTimeout(() => setIsInterviewerSpeaking(false), 2500);
-        return () => clearTimeout(speakTimeout);
+        
+        // Connect to AWS Polly backend
+        const synthesizeQuestion = async () => {
+            try {
+                const res = await fetch("http://localhost:5000/api/polly/synthesize", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ text: currentQ.question })
+                });
+                const data = await res.json();
+                if (data.audioUrl) {
+                    const audio = new Audio(data.audioUrl);
+                    audio.onended = () => setIsInterviewerSpeaking(false);
+                    audio.play();
+                } else {
+                    setIsInterviewerSpeaking(false);
+                }
+            } catch (err) {
+                console.error("Failed to map Polly TTS", err);
+                // fallback
+                setIsInterviewerSpeaking(false);
+            }
+        };
+
+        synthesizeQuestion();
     }, [questionIdx]);
 
     useEffect(() => {
@@ -203,9 +226,39 @@ export default function InterviewSession() {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setSubmitted(true);
         clearInterval(timerRef.current);
+        const generatedAnswerId = `ans_${Date.now()}`;
+
+        try {
+            // 1. Save to DynamoDB
+            await fetch("http://localhost:5000/api/dynamodb/answer", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    answerId: generatedAnswerId,
+                    sessionId: "session_frontend_demo",
+                    question: currentQ.question,
+                    answerText: response,
+                    transcribedText: response // Passing transcript for MVP mock
+                })
+            });
+
+            // 2. Trigger async NLP Analysis pipeline
+            await fetch("http://localhost:5000/api/evaluation/process-transcription", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    answerId: generatedAnswerId,
+                    sessionId: "session_frontend_demo",
+                    transcribedText: response
+                })
+            });
+        } catch (err) {
+            console.error("Failed backend persistence", err);
+        }
+
         if (questionIdx < QUESTIONS.length - 1) {
             setTimeout(() => {
                 setResponse('');
