@@ -7,6 +7,7 @@ const s3Routes = require("./routes/s3Routes");
 const dynamoRoutes = require("./routes/dynamoRoutes");
 const evaluationRoutes = require("./routes/evaluationRoutes");
 const pollyRoutes = require("./routes/pollyRoutes");
+const profileRoutes = require("./routes/profileRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -19,6 +20,7 @@ app.use("/api/s3", s3Routes);
 app.use("/api/dynamodb", dynamoRoutes);
 app.use("/api/evaluation", evaluationRoutes);
 app.use("/api/polly", pollyRoutes);
+app.use("/api/profile", profileRoutes);
 
 // Health check endpoint
 app.get("/health", (req, res) => {

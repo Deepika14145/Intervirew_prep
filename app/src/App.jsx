@@ -11,7 +11,10 @@ import ResumeUpload from './pages/ResumeUpload';
 import ResumePreview from './pages/ResumePreview';
 import AnalysisPage from "./pages/AnalysisPage";
 import Notifications from './pages/Notifications';
-
+import { AuthProvider, useAuth } from './context/AuthContext';
+import PrivateRoute from './components/PrivateRoute';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 /* Breadcrumb labels per route — add an entry when adding a new route */
 const BREADCRUMBS = {
   '/dashboard': ['Dashboard'],
@@ -28,16 +31,27 @@ const BREADCRUMBS = {
 function AppRoutes() {
   const { pathname } = useLocation();
   const breadcrumbs = BREADCRUMBS[pathname] ?? ['Dashboard'];
+  const { currentUser } = useAuth();
+
+  const userObj = currentUser ? {
+    name: currentUser.email || 'User',
+    role: 'Member'
+  } : { name: 'Guest', role: 'Visitor' };
 
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+
       {/* Pages WITH sidebar + topbar */}
       <Route
         element={
-          <MainLayout
-            breadcrumbs={breadcrumbs}
-            user={{ name: 'Alex Rivera', role: 'Frontend Dev' }}
-          />
+          <PrivateRoute>
+            <MainLayout
+              breadcrumbs={breadcrumbs}
+              user={userObj}
+            />
+          </PrivateRoute>
         }
       >
         <Route index element={<Navigate to="/dashboard" replace />} />
@@ -59,7 +73,11 @@ function AppRoutes() {
       </Route>
 
       {/* Full-screen session — no sidebar */}
-      <Route path="/interview/session" element={<InterviewSession />} />
+      <Route path="/interview/session" element={
+        <PrivateRoute>
+          <InterviewSession />
+        </PrivateRoute>
+      } />
 
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
@@ -69,8 +87,10 @@ function AppRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
-      <AppRoutes />
-      <ChatbotWidget />
+      <AuthProvider>
+        <AppRoutes />
+        <ChatbotWidget />
+      </AuthProvider>
     </BrowserRouter>
   );
 }

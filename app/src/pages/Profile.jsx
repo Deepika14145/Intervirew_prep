@@ -1,52 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Profile.module.css';
 
-// ─────────────────────────────────────────────────────────
-// Mock Initial Data & Endpoints
-// ─────────────────────────────────────────────────────────
-const MOCK_PROFILE_DATA = {
-    id: 'usr_123',
-    firstName: 'Alex',
-    lastName: 'Rivera',
-    email: 'alex.rivera@intervai.com',
-    phone: '+1 (555) 123-4567',
-    role: 'Frontend Developer',
-    level: 'Mid-Level',
-    skills: ['React', 'TypeScript', 'CSS Modules', 'System Design'],
-    preferences: {
-        emailNotifications: true,
-        smsNotifications: false,
-        theme: 'System',
-    }
-};
+import { useAuth } from '../context/AuthContext';
 
-/**
- * Backend Contract Specifications
- * --------------------------------
- * GET /api/users/profile
- * Returns: { user: ProfileObject }
- */
-const mockFetchProfile = async () => {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve({ user: MOCK_PROFILE_DATA }), 1000);
-    });
-};
-
-/**
- * Backend Contract Specifications
- * --------------------------------
- * PUT /api/users/profile
- * Payload: Partial<ProfileObject>
- * Returns: { success: boolean, user: ProfileObject }
- */
-const mockUpdateProfile = async (updates) => {
-    console.log("--> PUT /api/users/profile", updates);
-    return new Promise((resolve) => {
-        setTimeout(() => resolve({ success: true, user: { ...MOCK_PROFILE_DATA, ...updates } }), 800);
-    });
-};
+const API_BASE_URL = 'http://localhost:5000/api'; // Assuming backend runs on 5000
 
 export default function Profile() {
+    const { currentUser } = useAuth();
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
     const [activeTab, setActiveTab] = useState('general');
@@ -54,11 +14,46 @@ export default function Profile() {
     const [saveSuccess, setSaveSuccess] = useState(false);
 
     useEffect(() => {
-        mockFetchProfile().then(data => {
-            setFormData(data.user);
-            setIsLoading(false);
-        });
-    }, []);
+        if (!currentUser) return;
+
+        async function fetchUserProfile() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/profile/${currentUser.uid}`);
+                
+                if (res.status === 404) {
+                    // Initialize empty defaults for new users
+                    setFormData({
+                        firstName: '',
+                        lastName: '',
+                        email: currentUser.email || '',
+                        phone: '',
+                        role: '',
+                        level: 'Entry-Level',
+                        skills: '',
+                        preferences: {
+                            emailNotifications: true,
+                            smsNotifications: false,
+                            theme: 'System',
+                        }
+                    });
+                } else if (res.ok) {
+                    const data = await res.json();
+                    setFormData({
+                         ...data.user,
+                         skills: (data.user.skills || []).join(', ')
+                    });
+                } else {
+                    console.error("Failed to fetch profile");
+                }
+            } catch (err) {
+                console.error("Error fetching profile", err);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+        
+        fetchUserProfile();
+    }, [currentUser]);
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -82,25 +77,34 @@ export default function Profile() {
         setSaveSuccess(false);
     };
 
-    const handleInputArrayChange = (name, valStr) => {
-        // Simple comma separated split for tag arrays
-        const arr = valStr.split(',').map(s => s.trim()).filter(s => s);
-        setFormData(prev => ({ ...prev, [name]: arr }));
-        setSaveSuccess(false);
-    };
-
     const handleSave = async (e) => {
         e.preventDefault();
         setIsSaving(true);
         setSaveSuccess(false);
 
-        // Push the full form data to our mock backend endpoint
-        const response = await mockUpdateProfile(formData);
+        try {
+            const payload = { ...formData };
+            if (typeof payload.skills === 'string') {
+                payload.skills = payload.skills.split(',').map(s => s.trim()).filter(Boolean);
+            }
 
-        if (response.success) {
-            setFormData(response.user);
-            setSaveSuccess(true);
-            setTimeout(() => setSaveSuccess(false), 3000); // Hide success message after 3s
+            const response = await fetch(`${API_BASE_URL}/profile`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: currentUser.uid, ...payload })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setFormData({
+                    ...data.user,
+                    skills: (data.user.skills || []).join(', ')
+                });
+                setSaveSuccess(true);
+                setTimeout(() => setSaveSuccess(false), 3000);
+            }
+        } catch (error) {
+            console.error("Failed to save profile", error);
         }
 
         setIsSaving(false);
@@ -271,8 +275,8 @@ export default function Profile() {
                                         name="skills"
                                         className={styles.textarea}
                                         rows="3"
-                                        value={formData.skills.join(', ')}
-                                        onChange={(e) => handleInputArrayChange('skills', e.target.value)}
+                                        value={formData.skills}
+                                        onChange={handleInputChange}
                                         placeholder="e.g. React, Node.js, System Design"
                                     ></textarea>
                                 </div>
