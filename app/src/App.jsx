@@ -12,9 +12,10 @@ import ResumePreview from './pages/ResumePreview';
 import AnalysisPage from "./pages/AnalysisPage";
 import Notifications from './pages/Notifications';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import PrivateRoute from './components/PrivateRoute';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
+import ProtectedRoute from './components/ProtectedRoute';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+
 /* Breadcrumb labels per route — add an entry when adding a new route */
 const BREADCRUMBS = {
   '/dashboard': ['Dashboard'],
@@ -30,28 +31,33 @@ const BREADCRUMBS = {
 
 function AppRoutes() {
   const { pathname } = useLocation();
-  const breadcrumbs = BREADCRUMBS[pathname] ?? ['Dashboard'];
   const { currentUser } = useAuth();
+  const breadcrumbs = BREADCRUMBS[pathname] ?? ['Dashboard'];
 
+  // Parse a friendly name from the active Firebase session
+  const displayName = currentUser?.displayName || (currentUser?.email ? currentUser.email.split('@')[0] : 'User');
+
+  // Build the user object dynamically
   const userObj = currentUser ? {
-    name: currentUser.email || 'User',
-    role: 'Member'
+    name: displayName,
+    role: 'Candidate' // or 'Member' depending on your preference
   } : { name: 'Guest', role: 'Visitor' };
 
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      {/* Public Routes */}
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignupPage />} />
 
-      {/* Pages WITH sidebar + topbar */}
+      {/* Pages WITH sidebar + topbar (PROTECTED) */}
       <Route
         element={
-          <PrivateRoute>
+          <ProtectedRoute>
             <MainLayout
               breadcrumbs={breadcrumbs}
               user={userObj}
             />
-          </PrivateRoute>
+          </ProtectedRoute>
         }
       >
         <Route index element={<Navigate to="/dashboard" replace />} />
@@ -72,12 +78,15 @@ function AppRoutes() {
         {/* <Route path="/interview-analysis" element={<InterviewAnalysis />} /> */}
       </Route>
 
-      {/* Full-screen session — no sidebar */}
-      <Route path="/interview/session" element={
-        <PrivateRoute>
-          <InterviewSession />
-        </PrivateRoute>
-      } />
+      {/* Full-screen session — no sidebar (PROTECTED) */}
+      <Route 
+        path="/interview/session" 
+        element={
+          <ProtectedRoute>
+            <InterviewSession />
+          </ProtectedRoute>
+        } 
+      />
 
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

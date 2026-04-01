@@ -1,9 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Profile.module.css';
-
 import { useAuth } from '../context/AuthContext';
 
-const API_BASE_URL = 'http://localhost:5000/api'; // Assuming backend runs on 5000
+// ─────────────────────────────────────────────────────────
+// Secure Endpoints
+// ─────────────────────────────────────────────────────────
+/**
+ * Hit the backend to load DynamoDB Profile Data
+ */
+const fetchProfile = async () => {
+    const token = localStorage.getItem("authToken");
+    const res = await fetch("http://localhost:5000/api/auth/me", {
+        headers: { "Authorization": `Bearer ${token}` }
+    });
+    if (res.status === 404) return null; // Handle missing profile gracefully
+    if (!res.ok) throw new Error("Failed to fetch profile");
+    return res.json();
+};
+
+/**
+ * Persist updates back to DynamoDB
+ */
+const updateProfile = async (updates) => {
+    const token = localStorage.getItem("authToken");
+    const res = await fetch("http://localhost:5000/api/auth/me", {
+        method: "PUT",
+        headers: { 
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updates)
+    });
+    if (!res.ok) throw new Error("Failed to save profile");
+    return res.json();
+};
 
 export default function Profile() {
     const { currentUser } = useAuth();
@@ -13,47 +43,51 @@ export default function Profile() {
     const [formData, setFormData] = useState(null);
     const [saveSuccess, setSaveSuccess] = useState(false);
 
+    const [errorMsg, setErrorMsg] = useState(null);
+
     useEffect(() => {
         if (!currentUser) return;
 
-        async function fetchUserProfile() {
-            try {
-                const res = await fetch(`${API_BASE_URL}/profile/${currentUser.uid}`);
-                
-                if (res.status === 404) {
-                    // Initialize empty defaults for new users
-                    setFormData({
-                        firstName: '',
-                        lastName: '',
-                        email: currentUser.email || '',
-                        phone: '',
-                        role: '',
-                        level: 'Entry-Level',
-                        skills: '',
-                        preferences: {
-                            emailNotifications: true,
-                            smsNotifications: false,
-                            theme: 'System',
-                        }
-                    });
-                } else if (res.ok) {
-                    const data = await res.json();
-                    setFormData({
-                         ...data.user,
-                         skills: (data.user.skills || []).join(', ')
-                    });
-                } else {
-                    console.error("Failed to fetch profile");
-                }
-            } catch (err) {
-                console.error("Error fetching profile", err);
-            } finally {
-                setIsLoading(false);
+        fetchProfile().then(data => {
+            if (!data || !data.user) {
+                // Initialize empty defaults for new users
+                setFormData({
+                    firstName: '',
+                    lastName: '',
+                    email: currentUser.email || '',
+                    phone: '',
+                    role: '',
+                    level: 'Entry-Level',
+                    skills: '',
+                    preferences: {
+                        emailNotifications: true,
+                        smsNotifications: false,
+                        theme: 'System',
+                    }
+                });
+            } else {
+                setFormData({
+                    ...data.user,
+                    skills: (data.user.skills || []).join(', ')
+                });
             }
-        }
-        
-        fetchUserProfile();
+            setIsLoading(false);
+        }).catch(err => {
+            console.error(err);
+            setErrorMsg(err.message);
+            setIsLoading(false);
+        });
     }, [currentUser]);
+
+    if (errorMsg) {
+        return (
+            <div className={`${styles.profileContainer} u-page-enter`} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column' }}>
+                <h2 style={{ color: 'var(--color-danger)' }}>Backend Connection Failed</h2>
+                <p>Error: {errorMsg}</p>
+                <p style={{ marginTop: '20px', color: 'var(--color-text-muted)' }}>Did you restart your backend terminal (`node server.js`) after my last update?</p>
+            </div>
+        );
+    }
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -88,21 +122,16 @@ export default function Profile() {
                 payload.skills = payload.skills.split(',').map(s => s.trim()).filter(Boolean);
             }
 
-            const response = await fetch(`${API_BASE_URL}/profile`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: currentUser.uid, ...payload })
-            });
+            // Push the full form data to our backend endpoint using the JWT abstraction
+            const data = await updateProfile(payload);
 
-            if (response.ok) {
-                const data = await response.json();
-                setFormData({
-                    ...data.user,
-                    skills: (data.user.skills || []).join(', ')
-                });
-                setSaveSuccess(true);
-                setTimeout(() => setSaveSuccess(false), 3000);
-            }
+            setFormData({
+                ...data.user,
+                skills: (data.user.skills || []).join(', ')
+            });
+            
+            setSaveSuccess(true);
+            setTimeout(() => setSaveSuccess(false), 3000);
         } catch (error) {
             console.error("Failed to save profile", error);
         }
@@ -174,7 +203,7 @@ export default function Profile() {
 
                                 <div className={styles.avatarSection}>
                                     <div className={styles.avatarCircle}>
-                                        {formData.firstName[0]}{formData.lastName[0]}
+                                        {formData.firstName?.[0]}{formData.lastName?.[0]}
                                     </div>
                                     <div className={styles.avatarActions}>
                                         <button type="button" className={styles.secondaryBtn}>Upload new picture</button>

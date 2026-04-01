@@ -216,7 +216,7 @@
 .primaryBtn {
     width: 100%;
     background: var(--color-primary);
-    color: white; /* Buttons usually have explicit text color based on primary context */
+    color: white; 
     padding: 0.875rem;
     border-radius: var(--radius-md, 10px);
     font-weight: 600;
