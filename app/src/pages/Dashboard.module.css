@@ -72,3 +72,21 @@
   .statsGrid { grid-template-columns: repeat(2, 1fr); }
   .mainGrid { grid-template-columns: 1fr; }
 }
+
+@media (max-width: 640px) {
+  .banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+  }
+  .bannerInfo .u-heading-1 { font-size: 1.2rem; }
+  .quickActions { flex-direction: column; gap: var(--sp-2); }
+  .primaryBtn, .secondaryBtn { width: 100%; text-align: center; padding: var(--sp-3); }
+  .readinessWidget { width: 100%; justify-content: flex-start; }
+  .statsGrid { grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
+  .statValue { font-size: var(--text-xl); }
+  .mainGrid { grid-template-columns: 1fr; }
+  .table { font-size: 0.75rem; }
+  .table th, .table td { padding: var(--sp-2); }
+}

@@ -64,3 +64,17 @@
   .summary-bar { flex-direction: column; }
   .summary-stats { gap: 16px; }
 }
+
+@media (max-width: 640px) {
+  .analysis-header { flex-direction: column; }
+  .analysis-header h1 { font-size: 1.4rem; }
+  .header-actions { width: 100%; }
+  .btn-primary, .btn-download { flex: 1; text-align: center; }
+  .summary-bar { flex-direction: column; align-items: flex-start; padding: 16px; gap: 16px; }
+  .summary-stats { width: 100%; justify-content: space-between; }
+  .stat-val { font-size: 1.4rem; }
+  .q-card { padding: 16px; }
+  .q-card-header { flex-wrap: wrap; gap: 8px; }
+  .q-scores-row { grid-template-columns: 1fr; gap: 10px; }
+  .q-question { font-size: 0.92rem; }
+}

@@ -93,3 +93,17 @@
 
 .evalProgress { width: 280px; height: 6px; background: var(--color-border); border-radius: 999px; overflow: hidden; }
 .evalProgressFill { height: 100%; background: var(--color-primary); border-radius: 999px; transition: width 0.5s ease; }
+
+@media (max-width: 768px) {
+  .body { flex-direction: column; overflow-y: auto; }
+  .leftPanel { width: 100%; border-right: none; border-bottom: 1px solid var(--color-border); padding: var(--sp-4); max-height: none; }
+  .rightPanel { padding: var(--sp-4); }
+  .topbar { padding: 0 var(--sp-3); }
+  .progressLabel { font-size: 10px; }
+  .textarea { min-height: 140px; }
+  .footer { padding: var(--sp-3) var(--sp-4); }
+  .doneScreen { padding: var(--sp-6) var(--sp-4); }
+  .doneTitle { font-size: 1.4rem; }
+  .analyseBtn { width: 100%; }
+  .evalProgress { width: 100%; }
+}

@@ -24,3 +24,12 @@
 .itemTime { font-size: var(--text-xs); color: var(--color-text-muted); white-space: nowrap; flex-shrink: 0; }
 .itemMessage { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.5; }
 .unreadIndicator { width: 8px; height: 8px; border-radius: 50%; background: var(--color-primary); flex-shrink: 0; margin-top: 6px; }
+
+@media (max-width: 640px) {
+  .layout { grid-template-columns: 1fr; }
+  .filterSidebar { display: flex; overflow-x: auto; padding: var(--sp-3); }
+  .navMenu { flex-direction: row; gap: var(--sp-2); }
+  .navItem { white-space: nowrap; padding: var(--sp-2) var(--sp-3); }
+  .notificationItem { padding: var(--sp-3) var(--sp-4); gap: var(--sp-3); }
+  .itemHeader { flex-direction: column; gap: var(--sp-1); }
+}
