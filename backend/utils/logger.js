@@ -10,7 +10,7 @@ const logger = winston.createLogger({
 });
 
 // Avoid uploading credentials to git, load from .env. The user will handle AWS security.
-if (process.env.AWS_REGION && process.env.AWS_ACCESS_KEY_ID && process.env.NODE_ENV === 'production') {
+if (process.env.AWS_REGION && process.env.AWS_ACCESS_KEY_ID && process.env.NODE_ENV === 'production' && process.env.ENABLE_CLOUDWATCH === 'true') {
     logger.add(new WinstonCloudWatch({
         logGroupName: process.env.CLOUDWATCH_LOG_GROUP_NAME || '/intervai/backend',
         logStreamName: process.env.CLOUDWATCH_LOG_STREAM_NAME || `express-backend-${new Date().toISOString().split('T')[0]}`,
