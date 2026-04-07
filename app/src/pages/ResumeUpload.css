@@ -1,0 +1,57 @@
+.upload-page { max-width: 640px; margin: 0 auto; }
+.title-section { margin-bottom: 24px; }
+.title-section h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; }
+.title-section p { color: #64748b; font-size: 0.95rem; }
+
+.upload-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 32px; box-shadow: 0 2px 8px rgba(0,0,0,.06); display: flex; flex-direction: column; gap: 20px; }
+.hidden-input { display: none; }
+
+.drop-zone {
+  border: 2px dashed #cbd5e1; border-radius: 12px; padding: 40px 24px;
+  text-align: center; cursor: pointer; transition: border-color .2s, background .2s;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.drop-zone:hover, .drop-zone.dragging { border-color: #2f5cff; background: #eff6ff; }
+.upload-icon { font-size: 2.5rem; }
+.drop-zone h3 { font-size: 1rem; font-weight: 700; color: #0f172a; }
+.drop-zone p { font-size: 0.85rem; color: #64748b; }
+.choose-btn { margin-top: 8px; padding: 8px 20px; background: #2f5cff; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+
+.file-box { border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.file-info { display: flex; align-items: center; gap: 12px; }
+.file-icon { font-size: 1.8rem; }
+.file-name { font-weight: 600; font-size: 0.9rem; }
+.file-info small { color: #64748b; font-size: 0.8rem; }
+.remove { cursor: pointer; color: #94a3b8; font-size: 1rem; align-self: flex-end; }
+.progress-section { display: flex; justify-content: space-between; font-size: 0.8rem; color: #64748b; }
+.progress-bar { height: 6px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
+.progress-fill { height: 100%; background: #2f5cff; border-radius: 999px; transition: width .3s; }
+
+.footer { display: flex; align-items: center; justify-content: space-between; }
+.secure { font-size: 0.8rem; color: #64748b; }
+.actions { display: flex; gap: 10px; }
+.back { padding: 8px 20px; background: none; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; font-size: 0.9rem; }
+.continue { padding: 8px 24px; background: #2f5cff; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; }
+.continue:disabled { opacity: .5; cursor: not-allowed; }
+
+.role-section { display: flex; flex-direction: column; gap: 6px; }
+.field-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #64748b; }
+.role-select { padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.9rem; outline: none; background: #fff; }
+.role-select:focus { border-color: #2f5cff; }
+.jd-textarea { padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.88rem; outline: none; resize: vertical; font-family: inherit; line-height: 1.6; }
+.jd-textarea:focus { border-color: #2f5cff; }
+
+.analysis-preview { border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; background: #f8fafc; }
+.preview-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.preview-title { font-weight: 700; font-size: 0.95rem; color: #0f172a; }
+.ats-badge { background: #2f5cff; color: #fff; font-size: 0.8rem; font-weight: 700; padding: 4px 12px; border-radius: 999px; }
+.preview-feedback { font-size: 0.88rem; color: #475569; line-height: 1.6; margin-top: 10px; }
+
+.fit-section { border: 2px solid; border-radius: 10px; padding: 14px; margin-bottom: 12px; }
+.fit-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
+.fit-label { font-weight: 700; font-size: 0.9rem; color: #0f172a; }
+.fit-verdict { font-size: 0.85rem; font-weight: 700; padding: 4px 12px; border-radius: 999px; }
+.fit-gaps, .fit-suggestions { margin-top: 8px; }
+.gaps-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #64748b; display: block; margin-bottom: 6px; }
+.fit-gaps ul, .fit-suggestions ul { margin: 0; padding-left: 18px; }
+.fit-gaps li, .fit-suggestions li { font-size: 0.85rem; color: #334155; line-height: 1.6; margin-bottom: 4px; }

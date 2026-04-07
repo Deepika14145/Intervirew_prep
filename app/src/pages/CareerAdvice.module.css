@@ -1,0 +1,66 @@
+.page { max-width: 1100px; margin: 0 auto; padding-bottom: 60px; }
+
+.pageHeader { margin-bottom: 24px; }
+.pageHeader h1 { font-size: 1.8rem; font-weight: 800; color: var(--color-text); margin-bottom: 6px; }
+.pageHeader p { color: var(--color-text-muted); font-size: 0.95rem; }
+
+.roleBar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.roleChip { padding: 7px 16px; border: 1px solid var(--color-border); border-radius: 999px; background: var(--color-surface); font-size: 0.82rem; font-weight: 600; cursor: pointer; color: var(--color-text-muted); transition: all .15s; white-space: nowrap; }
+.roleChip:hover { border-color: var(--color-primary); color: var(--color-primary); }
+.roleChipActive { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+
+.grid { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
+.left { display: flex; flex-direction: column; gap: 20px; }
+.right { display: flex; flex-direction: column; gap: 20px; }
+
+.card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 24px; }
+.cardHeader { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+.cardIcon { font-size: 1.3rem; }
+.cardHeader h2 { font-size: 1rem; font-weight: 700; color: var(--color-text); margin: 0; }
+
+/* Roadmap */
+.roadmapSteps { display: flex; flex-direction: column; gap: 0; }
+.step { display: flex; align-items: center; gap: 14px; position: relative; padding-bottom: 16px; }
+.step:last-child { padding-bottom: 0; }
+.stepNum { width: 28px; height: 28px; border-radius: 50%; background: var(--color-primary); color: #fff; font-size: 0.75rem; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 1; }
+.stepLine { position: absolute; left: 13px; top: 28px; width: 2px; height: calc(100% - 12px); background: var(--color-border); }
+.step:last-child .stepLine { display: none; }
+.stepLabel { font-size: 0.9rem; font-weight: 500; color: var(--color-text); }
+
+/* Resources */
+.resourcesList { display: flex; flex-direction: column; gap: 10px; }
+.resourceItem { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); text-decoration: none; transition: border-color .15s, background .15s; }
+.resourceItem:hover { border-color: var(--color-primary); background: #eff6ff; }
+.resourceLeft { display: flex; align-items: center; gap: 10px; }
+.resourceType { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--color-text-muted); background: var(--color-bg); padding: 2px 8px; border-radius: 999px; border: 1px solid var(--color-border); }
+.resourceTitle { font-size: 0.88rem; font-weight: 600; color: var(--color-text); }
+.resourceTag { font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+.tagFree { background: #dcfce7; color: #16a34a; }
+.tagPaid { background: #e0e7ff; color: #4338ca; }
+
+/* Salary */
+.salaryRole { font-size: 0.82rem; color: var(--color-text-muted); margin-bottom: 16px; font-weight: 600; }
+.salaryRow { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--color-border); }
+.salaryRow:last-of-type { border-bottom: none; }
+.salaryLevel { font-size: 0.88rem; font-weight: 700; }
+.salaryRange { font-size: 0.95rem; font-weight: 800; color: var(--color-text); }
+.salaryNote { font-size: 0.75rem; color: var(--color-text-muted); margin-top: 12px; }
+
+/* Tips */
+.tipGroup { margin-bottom: 16px; }
+.tipGroup:last-child { margin-bottom: 0; }
+.tipLevel { font-size: 0.85rem; font-weight: 700; color: var(--color-text); margin-bottom: 8px; }
+.tipList { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 5px; }
+.tipList li { font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.5; }
+
+/* CTA */
+.ctaCard { background: linear-gradient(135deg, #0f172a, #1e3a8a); border-radius: var(--radius-md); padding: 24px; text-align: center; }
+.ctaIcon { font-size: 2rem; margin-bottom: 10px; }
+.ctaCard h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.ctaCard p { font-size: 0.85rem; color: #bfdbfe; line-height: 1.6; margin-bottom: 16px; }
+.ctaBtn { padding: 10px 24px; background: var(--color-primary); color: #fff; border: none; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: background .15s; }
+.ctaBtn:hover { background: var(--color-primary-hover); }
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+}

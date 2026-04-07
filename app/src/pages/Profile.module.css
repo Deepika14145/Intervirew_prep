@@ -1,0 +1,28 @@
+.profileContainer { display: flex; flex-direction: column; gap: var(--sp-6); }
+.header { }
+.layout { display: grid; grid-template-columns: 220px 1fr; gap: var(--sp-6); }
+.sidebar { padding: var(--sp-4); }
+.navMenu { display: flex; flex-direction: column; gap: 2px; }
+.navItem { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-2) var(--sp-3); border-radius: var(--radius-sm); background: none; border: none; cursor: pointer; font-size: var(--text-sm); font-weight: 500; color: var(--color-text-muted); text-align: left; transition: background .15s; }
+.navItem:hover { background: var(--color-bg); color: var(--color-text); }
+.active { background: #e0e7ff; color: var(--color-primary); font-weight: 600; }
+.mainContent { }
+.formContainer { display: flex; flex-direction: column; gap: var(--sp-5); }
+.formSection { display: flex; flex-direction: column; gap: var(--sp-4); }
+.sectionTitle { font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--sp-2); }
+.subsectionTitle { font-size: var(--text-base); font-weight: 700; margin-top: var(--sp-2); }
+.grid2Col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+.formGroup { display: flex; flex-direction: column; gap: var(--sp-1); }
+.input, .select, .textarea { padding: var(--sp-3); border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: var(--text-sm); outline: none; font-family: inherit; }
+.input:focus, .select:focus, .textarea:focus { border-color: var(--color-primary); }
+.textarea { resize: vertical; }
+.toggleRow { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-3) 0; border-bottom: 1px solid var(--color-border); cursor: pointer; }
+.toggleInfo { display: flex; flex-direction: column; gap: 2px; }
+.toggleLabel { font-size: var(--text-sm); font-weight: 600; }
+.toggleSubtext { font-size: var(--text-xs); color: var(--color-text-muted); }
+.checkbox { width: 18px; height: 18px; accent-color: var(--color-primary); cursor: pointer; }
+.formActions { display: flex; align-items: center; justify-content: flex-end; gap: var(--sp-4); padding-top: var(--sp-4); border-top: 1px solid var(--color-border); }
+.successMessage { color: var(--color-success); font-size: var(--text-sm); font-weight: 600; }
+.primaryBtn { padding: var(--sp-2) var(--sp-6); background: var(--color-primary); color: #fff; border: none; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer; font-size: var(--text-sm); }
+.primaryBtn:disabled { opacity: .6; cursor: not-allowed; }
+.secondaryBtn { padding: var(--sp-2) var(--sp-4); background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-sm); cursor: pointer; font-size: var(--text-sm); }

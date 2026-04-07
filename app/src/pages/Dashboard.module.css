@@ -1,0 +1,74 @@
+.dashboardContainer { display: flex; flex-direction: column; gap: var(--sp-6); }
+
+.banner {
+  background: linear-gradient(135deg, #203d82, #1e3a8a);
+  border-radius: var(--radius-lg); padding: var(--sp-8);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-6);
+  color: #fff;
+}
+.bannerInfo { flex: 1; }
+.bannerInfo .u-heading-1 { color: #e0f2fe; margin-bottom: var(--sp-2); font-size: 1.6rem; text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+.bannerSubtext { color: #bfdbfe; font-size: var(--text-sm); margin-bottom: var(--sp-5); }
+.quickActions { display: flex; gap: var(--sp-3); }
+.primaryBtn {
+  padding: var(--sp-2) var(--sp-5); background: var(--color-primary); color: #fff;
+  border: none; border-radius: var(--radius-sm); font-weight: 600; cursor: pointer;
+  font-size: var(--text-sm); transition: background .15s;
+}
+.primaryBtn:hover { background: var(--color-primary-hover); }
+.secondaryBtn {
+  padding: var(--sp-2) var(--sp-5); background: rgba(255,255,255,.1); color: #fff;
+  border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-sm);
+  font-weight: 600; cursor: pointer; font-size: var(--text-sm); transition: background .15s;
+}
+.secondaryBtn:hover { background: rgba(255,255,255,.2); }
+
+.readinessWidget { display: flex; align-items: center; gap: var(--sp-4); }
+.circularChart { width: 100px; height: 100px; }
+.circleBg { fill: none; stroke: rgba(255,255,255,.15); stroke-width: 3.8; }
+.circle { fill: none; stroke: #60a5fa; stroke-width: 3.8; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; }
+.percentage { fill: #fff; font-size: 7px; font-weight: 700; text-anchor: middle; }
+.readinessText { display: flex; flex-direction: column; gap: 4px; }
+.readinessLabel { color: #fff; font-weight: 700; font-size: var(--text-sm); }
+.readinessSubtext { color: #93c5fd; font-size: var(--text-xs); }
+
+.statsGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-4); }
+.statCard { display: flex; align-items: center; gap: var(--sp-4); }
+.statIcon { font-size: 1.8rem; }
+.statContent { display: flex; flex-direction: column; gap: 2px; }
+.statLabel { font-size: var(--text-xs); color: var(--color-text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.statValue { font-size: var(--text-2xl); font-weight: 800; color: var(--color-text); }
+
+.mainGrid { display: grid; grid-template-columns: 2fr 1fr; gap: var(--sp-4); }
+.gridSpan2 { grid-column: span 1; }
+.gridSpan1 { grid-column: span 1; }
+
+.cardHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--sp-4); }
+.textBtn { background: none; border: none; color: var(--color-primary); font-size: var(--text-sm); font-weight: 600; cursor: pointer; }
+.textBtn:hover { text-decoration: underline; }
+
+.tableWrapper { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+.table th { text-align: left; padding: var(--sp-2) var(--sp-3); color: var(--color-text-muted); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: .04em; border-bottom: 1px solid var(--color-border); }
+.table td { padding: var(--sp-3); border-bottom: 1px solid var(--color-border); }
+.primaryCell { font-weight: 600; }
+.scorePill { padding: 2px 10px; border-radius: 999px; font-size: var(--text-xs); font-weight: 700; }
+.scoreHigh { background: #dcfce7; color: #16a34a; }
+.scoreMed  { background: #fef9c3; color: #ca8a04; }
+.scoreLow  { background: #fee2e2; color: #dc2626; }
+
+.topicsList { display: flex; flex-direction: column; gap: var(--sp-4); }
+.topicItem { display: flex; flex-direction: column; gap: var(--sp-1); }
+.topicHeader { display: flex; justify-content: space-between; }
+.topicName { font-size: var(--text-sm); font-weight: 500; }
+.topicScore { font-size: var(--text-sm); font-weight: 700; color: var(--color-text-muted); }
+.progressBarBg { height: 6px; background: var(--color-border); border-radius: 999px; overflow: hidden; }
+.progressBarFill { height: 100%; border-radius: 999px; transition: width .6s ease; }
+.bgSuccess { background: var(--color-success); }
+.bgWarning { background: var(--color-warning); }
+.bgDanger  { background: var(--color-danger); }
+
+@media (max-width: 1024px) {
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+  .mainGrid { grid-template-columns: 1fr; }
+}
