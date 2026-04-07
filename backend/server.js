@@ -38,18 +38,26 @@ app.use(
 
 const rawOrigins = process.env.FRONTEND_URL || "http://localhost:5173";
 const corsOrigins = rawOrigins.split(",").map((s) => s.trim()).filter(Boolean);
-const corsOriginOption = corsOrigins.length <= 1 ? corsOrigins[0] || "http://localhost:5173" : corsOrigins;
 
 app.use(
     cors({
-        origin: corsOriginOption,
+        origin: (origin, callback) => {
+            // Allow requests with no origin (mobile apps, curl, Render health checks)
+            if (!origin) return callback(null, true);
+            // Allow if matches any configured origin
+            if (corsOrigins.some(o => origin === o || origin.endsWith('.onrender.com'))) {
+                return callback(null, true);
+            }
+            return callback(null, false);
+        },
         credentials: true,
         allowedHeaders: ['Content-Type', 'Authorization'],
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     })
 );
 
-app.use(express.json({ limit: process.env.JSON_BODY_LIMIT || "1mb" }));
+app.use(express.json({ limit: process.env.JSON_BODY_LIMIT || "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 const rateLimitWindowMs =
     Number.parseInt(process.env.RATE_LIMIT_WINDOW_MS || String(15 * 60 * 1000), 10) || 15 * 60 * 1000;
