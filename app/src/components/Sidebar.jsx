@@ -17,24 +17,23 @@ const FOOTER_LINKS = [
   { to: '/settings', label: 'Settings', icon: '⚙️' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, onClose }) {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    try {
-      await logout();
-      navigate('/login');
-    } catch (err) {
-      console.error('Logout failed:', err);
-    }
+    try { await logout(); navigate('/login'); }
+    catch (err) { console.error('Logout failed:', err); }
   };
 
+  const handleNav = () => { if (onClose) onClose(); };
+
   return (
-    <aside className={styles.sidebar}>
+    <aside className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ''}`}>
       <div className={styles.logoArea}>
         <span className={styles.logoMark}>⚡</span>
         <span className={styles.logoText}>Interv<span>AI</span></span>
+        <button className={styles.closeBtn} onClick={onClose} aria-label="Close menu">✕</button>
       </div>
 
       <nav className={styles.navSection} aria-label="Main navigation">
@@ -43,6 +42,7 @@ export default function Sidebar() {
           <NavLink
             key={to}
             to={to}
+            onClick={handleNav}
             className={({ isActive }) => `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`}
           >
             <span className={styles.navIcon}>{icon}</span>
@@ -59,16 +59,13 @@ export default function Sidebar() {
 
       <div className={styles.sidebarFooter}>
         {FOOTER_LINKS.map(({ to, label, icon }) => (
-          <NavLink key={to} to={to} className={styles.footerLink}>
+          <NavLink key={to} to={to} onClick={handleNav} className={styles.footerLink}>
             <span className={styles.navIcon}>{icon}</span>
             {label}
           </NavLink>
         ))}
-        <button
-          className={`${styles.footerLink} ${styles.footerLinkDanger}`}
-          onClick={handleLogout}
-          style={{ border: 'none', width: '100%', textAlign: 'left', cursor: 'pointer' }}
-        >
+        <button className={`${styles.footerLink} ${styles.footerLinkDanger}`} onClick={handleLogout}
+          style={{ border: 'none', width: '100%', textAlign: 'left', cursor: 'pointer' }}>
           <span className={styles.navIcon}>🚪</span>
           Logout
         </button>
