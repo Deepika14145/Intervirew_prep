@@ -1,7 +1,7 @@
 .dashboardContainer { display: flex; flex-direction: column; gap: var(--sp-6); }
 
 .banner {
-  background: linear-gradient(135deg, #203d82, #1e3a8a);
+  background: linear-gradient(135deg, #0c3191, #1e3a8a);
   border-radius: var(--radius-lg); padding: var(--sp-8);
   display: flex; align-items: center; justify-content: space-between; gap: var(--sp-6);
   color: #fff;
